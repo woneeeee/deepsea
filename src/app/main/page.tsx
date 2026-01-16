@@ -24,7 +24,7 @@ export default function MainPage() {
           width={326}
           height={309}
           alt="deepsea"
-          className="mt-[98px]"
+          className="mt-[300px]"
         />
         <p className="subtitle-24m mt-[342px] text-center text-[#127297]">화면을 클릭하세요</p>
         <div className="mt-[111px] flex gap-6">
