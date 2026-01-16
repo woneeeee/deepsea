@@ -1,11 +1,7 @@
 // import localFont from 'next/font/local';
 import './globals.css';
-
-// const pretendard = localFont({
-//   src: '../../public/fonts/PretendardVariable.woff2',
-//   variable: '--font-pretendard',
-//   display: 'swap',
-// });
+import { ModalProvider } from '@/contexts/ModalContext';
+import Modal from '@/components/Modal';
 
 export const metadata = {
   title: 'DEEPSEA',
@@ -18,7 +14,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="min-h-screen bg-cover bg-center bg-no-repeat">{children}</body>
+      <body className="min-h-screen bg-cover bg-center bg-no-repeat">
+        <ModalProvider>
+          {children}
+          <Modal />
+        </ModalProvider>
+      </body>
     </html>
   );
 }
