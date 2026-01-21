@@ -25,8 +25,8 @@ const Page = () => {
   };
 
   return (
-    <div className="flex w-full cursor-pointer flex-col items-center justify-center gap-3">
-      <p className="seogang-36 mt-[258px] w-[379px] p-[12px] text-[#00A4C3]">
+    <div className="bg-base bg-main flex w-full cursor-pointer flex-col items-center gap-3">
+      <p className="seogang-36 mt-[400px] w-[379px] p-[12px] text-[#00A4C3]">
         닉네임을 입력해 주세요
       </p>
       <input

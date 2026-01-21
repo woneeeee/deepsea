@@ -14,7 +14,7 @@ export default function MainPage() {
         setIsFaded(true);
         setTimeout(() => router.push('/main/name'), 700);
       }}
-      className="flex cursor-pointer flex-col items-center justify-center"
+      className="bg-base bg-main flex cursor-pointer flex-col items-center justify-center"
     >
       <div
         className={`transition-all duration-700 ${isFaded ? 'opacity-0 blur-md' : 'opacity-100'} `}
