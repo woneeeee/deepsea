@@ -161,6 +161,15 @@ body {
   letter-spacing: -1%;
 }
 
+.subtitle-40 {
+  font-family: var(--font-pretendard), sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 160%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
 .subtitle-24m {
   font-family: var(--font-pretendard), sans-serif;
   font-size: 24px;
@@ -229,6 +238,24 @@ body {
   font-size: 18px;
   line-height: 100%;
   letter-spacing: -1%;
+}
+
+.bombaram-72 {
+  font-family: 'HsBombaram21', sans-serif;
+  font-size: 72px;
+  font-weight: 400;
+  line-height: 160%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+.bombaram-24 {
+  font-family: 'HsBombaram21', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 160%;
+  letter-spacing: -1%;
+  vertical-align: middle;
 }
 
 /* Seongang Typography */
@@ -392,4 +419,42 @@ input:focus,
 select:focus {
   outline: none !important;
   box-shadow: none !important;
+}
+
+.box {
+  background-color: transparent;
+  background-image:
+    linear-gradient(transparent, transparent),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  border: 1px solid transparent;
+  border-radius: 20px;
+}
+
+.comment-header-gradient {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.01) 6.45%,
+    rgba(255, 255, 255, 0) 95.48%
+  );
+  backdrop-filter: blur(40px);
+  position: relative;
+  overflow: hidden;
+}
+
+.comment-header-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    ellipse 100% 50% at 49.51% 6.45%,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 50%
+  );
+  filter: blur(40px);
+  pointer-events: none;
 }
