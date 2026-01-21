@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useModal } from '@/contexts/ModalContext';
+import ProgressRail from '@/components/ProgressRail';
+import Header from '@/components/Header';
 
 const Page = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -160,6 +162,7 @@ const Page = () => {
         left: 0,
       }}
     >
+      <Header />
       <div
         style={{
           position: 'absolute',
@@ -249,6 +252,7 @@ const Page = () => {
             );
           });
         })()}
+      <ProgressRail />
     </div>
   );
 };
