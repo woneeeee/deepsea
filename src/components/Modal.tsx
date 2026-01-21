@@ -127,15 +127,21 @@ export default function Modal() {
           }}
         >
           {!useBigOrSmallFrame ? (
-            <img
-              src={`/icons/big-emotion${emotionIndex + 1}.svg`}
-              alt={`emotion-${emotionIndex + 1}`}
-              className="mt-50 h-[650px] w-[650px] object-contain"
+            <video
+              src={`/icons/big-emotion${emotionIndex + 1}.webm`}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="mt-50 h-[1000px] w-[1000px] object-contain"
             />
           ) : (
-            <img
-              src={`/icons/big-emotion${emotionIndex + 1}.svg`}
-              alt={`emotion-${emotionIndex + 1}`}
+            <video
+              src={`/icons/big-emotion${emotionIndex + 1}.webm`}
+              autoPlay
+              loop
+              muted
+              playsInline
               className="h-full w-full object-contain"
             />
           )}
@@ -326,7 +332,7 @@ export default function Modal() {
       {/* Comment 사이드바 */}
       {showComment && (
         <div
-          className="absolute top-[200px] right-[370px] z-30 h-full"
+          className="absolute top-[200px] right-[350px] z-30 mt-[30px] h-full"
           onClick={(e) => e.stopPropagation()}
         >
           <Comment emotionIndex={emotionIndex} onClose={() => setShowComment(false)} />
