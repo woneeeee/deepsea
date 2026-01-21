@@ -263,6 +263,15 @@ body {
   font-family: 'Seongang', sans-serif;
 }
 
+.seogang-32 {
+  font-family: 'Seongang', sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 160%;
+  letter-spacing: 0%;
+  text-align: center;
+}
+
 .seogang-36 {
   font-family: 'Seongang', sans-serif;
   font-size: 36px;
@@ -384,7 +393,7 @@ body {
 }
 
 .bg-main {
-  background-image: url('/icons/main-screen.png');
+  background-image: url('/icons/main-screen.svg');
 }
 
 .bg-deepsea {
@@ -399,6 +408,27 @@ body {
   background-image: url('/icons/explore-screen.svg');
 }
 
+.bg-end {
+  background-image: url('/icons/end-screen.svg');
+}
+
+.bg-choose {
+  background-image: url('/icons/choose-screen.svg');
+}
+
+.bg-light {
+  background-image: url('/icons/light-screen.svg');
+}
+
+.bg-up1 {
+  background-image: url('/icons/up-1.svg');
+}
+.bg-up2 {
+  background-image: url('/icons/up-2.svg');
+}
+.bg-up3 {
+  background-image: url('/icons/up-3.svg');
+}
 /* Gradient Styles */
 .bg-gradient-primary-soft {
   background: linear-gradient(180deg, rgba(229, 237, 249, 0.2) 0%, rgba(229, 237, 249, 0.02) 100%);
@@ -429,7 +459,6 @@ select:focus {
   background-clip: padding-box, border-box;
   background-origin: padding-box, border-box;
   border: 1px solid transparent;
-  border-radius: 20px;
 }
 
 .comment-header-gradient {
@@ -457,4 +486,15 @@ select:focus {
   );
   filter: blur(40px);
   pointer-events: none;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
