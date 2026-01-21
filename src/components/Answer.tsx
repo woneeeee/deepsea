@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Button from '@/components/Button';
 
 interface AnswerProps {
-  question: string; // Q. 뒤에 올 질문 내용
+  question: string;
   answerPrompt?: string; // A. 뒤에 올 프롬프트 (기본값: "지금 마음에 남아 있는 느낌을 자유롭게 적어주세요")
   maxLength?: number; // 최대 글자 수 (기본값: 200)
   onSave?: (answer: string) => void; // 저장하기 버튼 클릭 시 호출되는 함수
@@ -60,12 +60,12 @@ export default function Answer({ question, maxLength = 200, onSave }: AnswerProp
               maxHeight: '154px',
             }}
           />
+
           <div className="caption-14 absolute right-5 bottom-5 text-gray-100">
             ({answer.length}/{maxLength})
           </div>
         </div>
       </div>
-
       <div onClick={handleSave} className="flex cursor-pointer justify-end pr-[32px]">
         <img src="icons/save.svg" alt="save" width={95} height={42} />
       </div>
