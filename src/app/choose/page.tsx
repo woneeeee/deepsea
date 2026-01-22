@@ -24,9 +24,10 @@ export default function ChoosePage() {
   };
 
   const handleConfirm = () => {
-    // 선택 확정 로직 (예: 다음 페이지로 이동)
+    // 선택된 감정 번호를 localStorage에 저장
+    const selectedEmotion = mainEmotions[selectedIndex];
+    localStorage.setItem('selectedEmotion', selectedEmotion.toString());
     setIsModalOpen(false);
-    // TODO: 선택된 감정 저장 및 다음 페이지로 이동
   };
 
   const handleCancel = () => {

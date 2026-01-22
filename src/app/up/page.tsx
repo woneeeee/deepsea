@@ -23,14 +23,12 @@ export default function UpPage() {
 
   return (
     <div className="bg-base relative min-h-screen overflow-hidden">
-      {/* Up 1 Page */}
       <div
         className={`bg-base bg-up1 fixed inset-0 min-h-screen transition-transform duration-2000 ${
           scrollStage >= 1 ? 'translate-y-full' : 'translate-y-0'
         }`}
       />
 
-      {/* Up 2 Page */}
       <div
         className={`bg-base bg-up2 fixed inset-0 min-h-screen transition-transform duration-2000 ${
           scrollStage === 0
@@ -41,7 +39,6 @@ export default function UpPage() {
         }`}
       />
 
-      {/* Up 3 Page */}
       <div
         className={`bg-base bg-up3 fixed inset-0 min-h-screen transition-transform duration-2000 ${
           scrollStage <= 1 ? '-translate-y-full' : 'translate-y-0'

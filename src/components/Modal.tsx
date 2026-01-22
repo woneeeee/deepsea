@@ -233,7 +233,20 @@ export default function Modal() {
                     </p>
                   );
                 })()}
-                <Answer question={getEmotionQuestion(emotionIndex + 1)} />
+                <Answer
+                  question={getEmotionQuestion(emotionIndex + 1)}
+                  onSave={(answer) => {
+                    // 감정 번호별로 답변을 localStorage에 저장
+                    if (typeof window !== 'undefined' && emotionIndex !== null) {
+                      const emotionNumber = emotionIndex + 1;
+                      const savedAnswers = JSON.parse(
+                        localStorage.getItem('emotionAnswers') || '{}',
+                      );
+                      savedAnswers[emotionNumber] = answer;
+                      localStorage.setItem('emotionAnswers', JSON.stringify(savedAnswers));
+                    }
+                  }}
+                />
               </div>
             )}
           </div>

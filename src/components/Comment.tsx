@@ -13,14 +13,61 @@ interface Message {
   text: string;
   isUser: boolean;
   timestamp: Date;
+  username?: string;
 }
 
 export default function Comment({ emotionIndex, onClose }: CommentProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
+  const [username, setUsername] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const prevMessagesLengthRef = useRef<number>(0);
+
+  const postId = emotionIndex + 1; // 감정 번호를 postId로 사용
+
+  // 사용자 이름 불러오기
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        const res = await fetch('http://localhost:8080/user');
+        if (res.ok) {
+          const data = await res.json();
+          setUsername(data.username || '');
+        }
+      } catch (error) {
+        console.error('사용자 이름 불러오기 실패:', error);
+      }
+    };
+
+    fetchUsername();
+  }, []);
+
+  // 댓글 불러오기
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const res = await fetch(`http://localhost:8080/posts/${postId}/comments`);
+        if (res.ok) {
+          const data = await res.json();
+          const loadedMessages: Message[] = data.map((comment: any) => ({
+            id: comment.id.toString(),
+            text: comment.content,
+            isUser: true,
+            timestamp: new Date(comment.created_at),
+            username: comment.username,
+          }));
+          setMessages(loadedMessages);
+          prevMessagesLengthRef.current = loadedMessages.length;
+        }
+      } catch (error) {
+        console.error('댓글 불러오기 실패:', error);
+      }
+    };
+
+    fetchComments();
+  }, [postId]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -37,23 +84,55 @@ export default function Comment({ emotionIndex, onClose }: CommentProps) {
     }
   }, [messages]);
 
-  const handleSend = () => {
-    if (!inputValue.trim()) return;
+  const handleSend = async () => {
+    if (!inputValue.trim() || !username) return;
 
-    const newMessage: Message = {
-      id: Date.now().toString(),
-      text: inputValue.trim(),
-      isUser: true,
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, newMessage]);
+    const content = inputValue.trim();
     setInputValue('');
+    setIsLoading(true);
 
-    // 입력 필드 포커스 유지
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 0);
+    try {
+      // 백엔드에 댓글 저장
+      const res = await fetch(`http://localhost:8080/posts/${postId}/comments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          content,
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        // 저장된 댓글을 메시지에 추가
+        const newMessage: Message = {
+          id: data.commentId.toString(),
+          text: content,
+          isUser: true,
+          timestamp: new Date(),
+          username,
+        };
+
+        setMessages((prev) => [...prev, newMessage]);
+        prevMessagesLengthRef.current = messages.length;
+      } else {
+        console.error('댓글 저장 실패');
+        // 실패 시 입력값 복원
+        setInputValue(content);
+      }
+    } catch (error) {
+      console.error('댓글 저장 중 오류:', error);
+      // 실패 시 입력값 복원
+      setInputValue(content);
+    } finally {
+      setIsLoading(false);
+      // 입력 필드 포커스 유지
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 0);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -145,8 +224,8 @@ export default function Comment({ emotionIndex, onClose }: CommentProps) {
             />
             <button
               onClick={handleSend}
-              disabled={!inputValue.trim()}
-              className="flex cursor-pointer items-start justify-start"
+              disabled={!inputValue.trim() || isLoading || !username}
+              className="flex cursor-pointer items-start justify-start disabled:cursor-not-allowed disabled:opacity-50"
             >
               <Image src="/icons/upload.svg" alt="upload" width={32} height={32} />
             </button>

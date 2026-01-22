@@ -109,6 +109,20 @@ export const getEmotionTitleBig = (
   return EMOTION_TITLES_BIG[emotionNumber] || null;
 };
 
+// island 페이지에서 사용할 섬별 설명 상수
+export const ISLAND_DESCRIPTIONS: Record<number, string> = {
+  1: '', // 우정섬 설명
+  5: '', // 분노섬 설명
+  7: '', // 사랑섬 설명
+  8: '', // 상실섬 설명
+  9: '', // 방어섬 설명
+};
+
+// 섬별 설명을 가져오는 헬퍼 함수
+export const getIslandDescription = (emotionNumber: number): string => {
+  return ISLAND_DESCRIPTIONS[emotionNumber] || '';
+};
+
 // 연관감정 팀 매핑: [2 3 7], [5 11 15], [6 8 12], [1 10 14], [4 9 13]
 export const EMOTION_GROUPS: number[][] = [
   [2, 3, 7],
