@@ -13,6 +13,7 @@ import {
   getEmotionTitle,
   getEmotionTitleBig,
   getRelatedEmotions,
+  VIDEO_BASE_URL,
 } from '@/constants/emotionTexts';
 
 export default function Modal() {
@@ -128,16 +129,16 @@ export default function Modal() {
         >
           {!useBigOrSmallFrame ? (
             <video
-              src={`/icons/big-emotion${emotionIndex + 1}.webm`}
+              src={`${VIDEO_BASE_URL}/big-emotion${emotionIndex + 1}.webm`}
               autoPlay
               loop
               muted
               playsInline
-              className="mt-50 h-[1000px] w-[1000px] object-contain"
+              className="h-full w-full object-contain"
             />
           ) : (
             <video
-              src={`/icons/big-emotion${emotionIndex + 1}.webm`}
+              src={`${VIDEO_BASE_URL}/big-emotion${emotionIndex + 1}.webm`}
               autoPlay
               loop
               muted

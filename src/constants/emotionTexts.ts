@@ -139,3 +139,5 @@ export const getRelatedEmotions = (emotionNumber: number): number[] => {
   // 현재 감정을 제외한 같은 팀의 감정들 반환
   return group.filter((num) => num !== emotionNumber);
 };
+
+export const VIDEO_BASE_URL = process.env.NEXT_PUBLIC_VIDEO_BASE_URL!;
