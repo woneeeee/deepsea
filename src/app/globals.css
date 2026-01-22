@@ -161,6 +161,14 @@ body {
   letter-spacing: -1%;
 }
 
+.heading-72 {
+  font-family: var(--font-pretendard), sans-serif;
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 160%;
+  letter-spacing: 0%;
+}
+
 .subtitle-40 {
   font-family: var(--font-pretendard), sans-serif;
   font-size: 40px;
@@ -224,6 +232,32 @@ body {
   letter-spacing: -1%;
 }
 
+.instruction-32 {
+  font-family: var(--font-pretendard), sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 160%;
+  letter-spacing: 0%;
+  text-align: center;
+}
+
+.display-96 {
+  font-family: var(--font-pretendard), sans-serif;
+  font-size: 96px;
+  font-weight: 200;
+  line-height: 55px;
+  letter-spacing: 0%;
+  text-align: center;
+}
+
+.heading-28-semibold {
+  font-family: var(--font-pretendard), sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 55px;
+  letter-spacing: 0%;
+}
+
 /* HsBombaram21 Typography */
 .text-bombaram {
   font-family: 'HsBombaram21', sans-serif;
@@ -236,6 +270,7 @@ body {
 .cheo {
   font-family: 'HsBombaram21', sans-serif;
   font-size: 18px;
+  font-weight: 400;
   line-height: 100%;
   letter-spacing: -1%;
 }
@@ -429,6 +464,23 @@ body {
 .bg-up3 {
   background-image: url('/icons/up-3.svg');
 }
+
+.bg-screen1 {
+  background-image: url('/icons/screen-1.svg');
+}
+.bg-screen2 {
+  background-image: url('/icons/screen-2.svg');
+}
+.bg-screen7 {
+  background-image: url('/icons/screen-7.svg');
+}
+.bg-screen8 {
+  background-image: url('/icons/screen-8.svg');
+}
+.bg-screen9 {
+  background-image: url('/icons/screen-9.svg');
+}
+
 /* Gradient Styles */
 .bg-gradient-primary-soft {
   background: linear-gradient(180deg, rgba(229, 237, 249, 0.2) 0%, rgba(229, 237, 249, 0.02) 100%);
