@@ -134,7 +134,7 @@ export default function Modal() {
               loop
               muted
               playsInline
-              className="mt-50 h-[1000px] w-[1000px] object-contain"
+              className="mt-10 h-[1000px] w-[1000px] object-contain"
             />
           ) : (
             <video
@@ -151,7 +151,7 @@ export default function Modal() {
               const titleData = getEmotionTitle(emotionIndex + 1);
               if (!titleData) return null;
               return (
-                <div className="mt-5 ml-[10px] flex flex-col gap-[12px]">
+                <div className="-mt-40 ml-[10px] flex flex-col gap-[12px]">
                   <h3 className="bombaram-72 font-bold text-white">{titleData.title}</h3>
                   <p className="bombaram-24 text-white">{titleData.description}</p>
                 </div>
