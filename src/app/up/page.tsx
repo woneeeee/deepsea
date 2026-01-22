@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function UpPage() {
+  const router = useRouter();
   const [scrollStage, setScrollStage] = useState(0); // 0: up1, 1: up2 보임, 2: up3 보임
 
   useEffect(() => {
@@ -15,11 +17,17 @@ export default function UpPage() {
       setScrollStage(2);
     }, 4000);
 
+    // 모든 애니메이션이 완료된 후 /island로 이동 (애니메이션 duration 2000ms 고려)
+    const timer3 = setTimeout(() => {
+      router.push('/island');
+    }, 6000); // 4000ms (scrollStage 2) + 2000ms (애니메이션 duration)
+
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
+      clearTimeout(timer3);
     };
-  }, []);
+  }, [router]);
 
   return (
     <div className="bg-base relative min-h-screen overflow-hidden">
