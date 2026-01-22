@@ -14,19 +14,13 @@ export default function MainPage() {
         setIsFaded(true);
         setTimeout(() => router.push('/main/name'), 700);
       }}
-      className="bg-base bg-main flex cursor-pointer flex-col items-center justify-center"
+      className="bg-base bg-main flex cursor-pointer flex-col items-center"
     >
       <div
-        className={`transition-all duration-700 ${isFaded ? 'opacity-0 blur-md' : 'opacity-100'} `}
+        className={`mt-[300px] transition-all duration-700 ${isFaded ? 'opacity-0 blur-md' : 'opacity-100'} `}
       >
-        <Image
-          src={'icons/main-screen-title.svg'}
-          width={326}
-          height={309}
-          alt="deepsea"
-          className="mt-[300px]"
-        />
-        <p className="subtitle-24m mt-[342px] text-center text-[#127297]">화면을 클릭하세요</p>
+        <Image src={'icons/main-screen-title.svg'} width={326} height={309} alt="deepsea" />
+        <p className="subtitle-24m pt-[542px] text-center text-[#127297]">화면을 클릭하세요</p>
         <div className="mt-[111px] flex gap-6">
           <p className="caption-14 text-[#127297]">잠수함 팀</p>
           <Image src={'icons/line.svg'} width={1} height={14} alt="deepsea" />

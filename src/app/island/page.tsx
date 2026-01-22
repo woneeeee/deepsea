@@ -3,7 +3,7 @@
 import Header from '@/components/Header';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { getEmotionQuestion, getIslandDescription } from '@/constants/emotionTexts';
+import { getEmotionQuestion, getIslandDescription, VIDEO_BASE_URL } from '@/constants/emotionTexts';
 import LetterModalFrame from '@/components/LetterModalFrame';
 
 // 메인 감정별 서브 감정 그룹 매핑
@@ -200,7 +200,7 @@ export default function IslandPage() {
             {/* 비디오 - 오른쪽 상단 */}
             {selectedEmotion && (
               <video
-                src={`/icons/big-emotion${selectedEmotion}.webm`}
+                src={`${VIDEO_BASE_URL}/big-emotion${selectedEmotion}.webm`}
                 autoPlay
                 loop
                 muted

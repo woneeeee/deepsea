@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Header from '@/components/Header';
 import ChooseModal from '@/components/ChooseModal';
+import { VIDEO_BASE_URL } from '@/constants/emotionTexts';
 
 export default function ChoosePage() {
   // useBigOrSmallFrame을 사용하는 감정들: 1, 5, 7, 8, 9
@@ -54,7 +55,7 @@ export default function ChoosePage() {
           {/* 중앙 감정 이미지 */}
           <div className="flex items-center justify-center">
             <video
-              src={`/icons/big-emotion${currentEmotion}.webm`}
+              src={`${VIDEO_BASE_URL}/big-emotion${currentEmotion}.webm`}
               autoPlay
               loop
               muted

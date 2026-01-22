@@ -134,7 +134,7 @@ export default function Modal() {
               loop
               muted
               playsInline
-              className="h-full w-full object-contain"
+              className="mt-50 h-[1000px] w-[1000px] object-contain"
             />
           ) : (
             <video
