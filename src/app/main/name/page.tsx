@@ -3,14 +3,16 @@
 import { useEffect, useState } from 'react';
 import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
+import { API_BASE_URL } from '@/constants/emotionTexts';
 
 const Page = () => {
   const router = useRouter();
   const [inputValue, setInputValue] = useState('');
 
   const saveUsername = async () => {
-    const res = await fetch('http://localhost:8080/user', {
+    const res = await fetch(`${API_BASE_URL}/user`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },

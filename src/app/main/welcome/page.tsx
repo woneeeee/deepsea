@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
+import { API_BASE_URL } from '@/constants/emotionTexts';
 
 const Page = () => {
   const router = useRouter();
@@ -14,7 +15,7 @@ const Page = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch('http://localhost:8080/user');
+        const res = await fetch(`${API_BASE_URL}/user`);
 
         if (!res.ok) {
           throw new Error('사용자 없음');

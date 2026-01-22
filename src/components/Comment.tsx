@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import { API_BASE_URL } from '@/constants/emotionTexts';
 
 interface CommentProps {
   emotionIndex: number;
@@ -31,7 +32,7 @@ export default function Comment({ emotionIndex, onClose }: CommentProps) {
   useEffect(() => {
     const fetchUsername = async () => {
       try {
-        const res = await fetch('http://localhost:8080/user');
+        const res = await fetch(`${API_BASE_URL}/user`);
         if (res.ok) {
           const data = await res.json();
           setUsername(data.username || '');
@@ -48,7 +49,7 @@ export default function Comment({ emotionIndex, onClose }: CommentProps) {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await fetch(`http://localhost:8080/posts/${postId}/comments`);
+        const res = await fetch(`${API_BASE_URL}/posts/${postId}/comments`);
         if (res.ok) {
           const data = await res.json();
           const loadedMessages: Message[] = data.map((comment: any) => ({
@@ -93,7 +94,7 @@ export default function Comment({ emotionIndex, onClose }: CommentProps) {
 
     try {
       // 백엔드에 댓글 저장
-      const res = await fetch(`http://localhost:8080/posts/${postId}/comments`, {
+      const res = await fetch(`${API_BASE_URL}/posts/${postId}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

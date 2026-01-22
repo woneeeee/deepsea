@@ -3,7 +3,12 @@
 import Header from '@/components/Header';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { getEmotionQuestion, getIslandDescription, VIDEO_BASE_URL } from '@/constants/emotionTexts';
+import {
+  getEmotionQuestion,
+  getIslandDescription,
+  VIDEO_BASE_URL,
+  API_BASE_URL,
+} from '@/constants/emotionTexts';
 import LetterModalFrame from '@/components/LetterModalFrame';
 
 // 메인 감정별 서브 감정 그룹 매핑
@@ -46,7 +51,9 @@ export default function IslandPage() {
     // 사용자 이름 불러오기
     const fetchUsername = async () => {
       try {
-        const res = await fetch('http://localhost:8080/user');
+        const res = await fetch(`${API_BASE_URL}/user`, {
+          credentials: 'include',
+        });
         if (res.ok) {
           const data = await res.json();
           setUsername(data.username || null);
