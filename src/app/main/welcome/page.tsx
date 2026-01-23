@@ -43,11 +43,11 @@ const Page = () => {
       setScrollStage(1);
       // 배경이 아래로 스크롤되면서 바닷속으로 내려가는 애니메이션
       const startTime = Date.now();
-      const duration = 6000; // 4초 동안 스크롤
+      const duration = 3500; // 4초 동안 스크롤
 
       // 이미지 높이 계산
       // main-screen.svg가 세로로 길기 때문에, 배경이 위로 올라가면서 아래쪽 부분이 보이도록 함
-      const imageAspectRatio = 3;
+      const imageAspectRatio = 4;
       const imageTotalHeight = screenHeight * imageAspectRatio;
       const maxScroll = imageTotalHeight - screenHeight; // 이미지 끝까지 스크롤
 
@@ -58,12 +58,12 @@ const Page = () => {
         setBackgroundPosition(easeProgress * maxScroll);
 
         // 배경 이미지가 끝나기 전에 explore 화면이 아래에서 위로 올라오도록
-        if (progress >= 0.2) {
+        if (progress >= 0.9) {
           setScrollStage(2);
           // explore 화면이 올라온 후 실제 페이지로 이동
           setTimeout(() => {
             router.push('/explore');
-          }, 500);
+          }, 10);
         } else if (progress < 1) {
           requestAnimationFrame(animate);
         }
@@ -83,7 +83,7 @@ const Page = () => {
           backgroundSize: '100% auto',
           backgroundRepeat: 'no-repeat',
           width: '100%',
-          height: `${screenHeight * 3}px`, // 이미지 전체 높이를 더 크게
+          height: `${screenHeight * 5}px`, // 이미지 전체 높이를 더 크게
           minHeight: '100vh',
           transform: `translateY(-${backgroundPosition}px)`,
           transition: scrollStage === 0 ? 'transform 0.1s linear' : 'none',
