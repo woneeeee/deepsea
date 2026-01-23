@@ -39,7 +39,7 @@ const Page = () => {
         placeholder="2자 이상 입력해 주세요."
       />
       <Button
-        className={`pretendard-body-18 mt-[130px] h-[44px] w-[161px] items-center justify-center rounded-[50px] bg-[#E5EDF9]/30 p-[10px] text-center shadow-[0_4px_30px_0_rgba(0,176,192,0.2)] ${
+        className={`pretendard-body-18 mt-[130px] h-[44px] w-[161px] items-center justify-center rounded-[50px] bg-[#E5EDF9]/30 p-[10px] text-center shadow-[0_4px_30px_0_rgba(0,176,192,0.2)] hover:bg-[#BBE7EF99] hover:text-[#00A4C3] active:bg-[#00A4C399] ${
           inputValue.trim() ? 'text-[#00A4C3]' : 'text-primary-200'
         }`}
         onClick={saveUsername}
