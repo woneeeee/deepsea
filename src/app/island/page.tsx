@@ -40,6 +40,7 @@ export default function IslandPage() {
   const [username, setUsername] = useState<string | null>(null);
   const [isLetterModalOpen, setIsLetterModalOpen] = useState(false);
   const [savedAnswers, setSavedAnswers] = useState<SavedAnswer[]>([]);
+  const [savedAnswersCount, setSavedAnswersCount] = useState(0); // 연관 감정 중 저장된 답변 개수 (0, 1, 2)
 
   useEffect(() => {
     // localStorage에서 선택된 감정 번호 불러오기
@@ -66,6 +67,28 @@ export default function IslandPage() {
     fetchUsername();
   }, []);
 
+  // 선택된 메인 감정의 연관(서브) 감정들 중 저장된 답변 개수 계산
+  useEffect(() => {
+    if (!selectedEmotion) {
+      setSavedAnswersCount(0);
+      return;
+    }
+    const subEmotions = EMOTION_GROUPS[selectedEmotion] || [];
+    const allSavedAnswers = JSON.parse(localStorage.getItem('emotionAnswers') || '{}');
+    const count = subEmotions.filter((em) => allSavedAnswers[em]).length;
+    setSavedAnswersCount(count);
+  }, [selectedEmotion]);
+
+  // 모달을 닫은 후에도 letter 개수 갱신 (다른 탭에서 저장했을 수 있음)
+  useEffect(() => {
+    if (!isLetterModalOpen && selectedEmotion) {
+      const subEmotions = EMOTION_GROUPS[selectedEmotion] || [];
+      const allSavedAnswers = JSON.parse(localStorage.getItem('emotionAnswers') || '{}');
+      const count = subEmotions.filter((em) => allSavedAnswers[em]).length;
+      setSavedAnswersCount(count);
+    }
+  }, [isLetterModalOpen, selectedEmotion]);
+
   // 감정 번호에 따른 배경 매핑: 1->screen1, 5->screen2, 7->screen7, 8->screen8, 9->screen9
   const getBackgroundClass = (emotion: number | null): string => {
     if (!emotion) return 'bg-base';
@@ -79,15 +102,12 @@ export default function IslandPage() {
     return emotionToScreen[emotion] || 'bg-base';
   };
 
-  const handleLetterClick = () => {
+  // letterIndex: 0 = 첫 번째 유리병, 1 = 두 번째 유리병 (한 유리병에 하나의 답변만)
+  const handleLetterClick = (letterIndex: number) => {
     if (selectedEmotion) {
-      // 선택된 메인 감정과 같은 조의 서브 감정들 가져오기
       const subEmotions = EMOTION_GROUPS[selectedEmotion] || [];
-
-      // localStorage에서 모든 저장된 답변 불러오기
       const allSavedAnswers = JSON.parse(localStorage.getItem('emotionAnswers') || '{}');
 
-      // 같은 조의 서브 감정들의 답변만 필터링
       const filteredAnswers: SavedAnswer[] = subEmotions
         .map((emotionNum) => {
           const answer = allSavedAnswers[emotionNum];
@@ -102,8 +122,12 @@ export default function IslandPage() {
         })
         .filter((item): item is SavedAnswer => item !== null);
 
-      setSavedAnswers(filteredAnswers);
-      setIsLetterModalOpen(true);
+      // 클릭한 유리병에 해당하는 답변 하나만 모달에 표시
+      const oneAnswer = filteredAnswers[letterIndex];
+      if (oneAnswer) {
+        setSavedAnswers([oneAnswer]);
+        setIsLetterModalOpen(true);
+      }
     }
   };
 
@@ -111,22 +135,22 @@ export default function IslandPage() {
     <>
       <div className={`bg-base ${getBackgroundClass(selectedEmotion)} min-h-screen`}>
         <Header />
-        <div className="mt-[206px] ml-[160px] flex flex-col">
+        <div className="mt-[100px] ml-[160px] flex flex-col">
           {username && selectedEmotion && (
             <>
               <p className="subtitle-40 text-white">{username}님의</p>
               <p className="heading-72 text-white">{ISLAND_NAMES[selectedEmotion] || '섬'}</p>
               {(() => {
-                const description = getIslandDescription(selectedEmotion);
+                const description = getIslandDescription(selectedEmotion, username);
                 if (description) {
                   const hasBrTag = description.includes('<br/>');
                   return hasBrTag ? (
                     <p
-                      className="subtitle-40 text-white"
+                      className="body-36 text-white"
                       dangerouslySetInnerHTML={{ __html: description }}
                     />
                   ) : (
-                    <p className="subtitle-40 text-white">{description}</p>
+                    <p className="body-36 text-white">{description}</p>
                   );
                 }
                 return null;
@@ -134,13 +158,32 @@ export default function IslandPage() {
             </>
           )}
         </div>
-        {/* letter.svg 버튼 */}
-        <button
-          onClick={handleLetterClick}
-          className="absolute right-[100px] bottom-[100px] cursor-pointer"
-        >
-          <Image src="/icons/letter.svg" alt="letter" width={100} height={100} />
-        </button>
+        {/* letter 버튼: 저장된 답변 0개면 숨김, 1개면 first-letter, 2개면 first+second */}
+        {savedAnswersCount >= 1 && (
+          <div className="flex cursor-pointer">
+            <button
+              type="button"
+              onClick={() => handleLetterClick(0)}
+              className="absolute bottom-[100px] left-[200px] shrink-0"
+            >
+              <Image src="/icons/first-letter.svg" alt="first letter" width={220} height={100} />
+            </button>
+            {savedAnswersCount >= 2 && (
+              <button
+                type="button"
+                onClick={() => handleLetterClick(1)}
+                className="absolute bottom-[224px] left-[724px] shrink-0"
+              >
+                <Image
+                  src="/icons/second-letter.svg"
+                  alt="second letter"
+                  width={220}
+                  height={100}
+                />
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       {/* 저장된 답변 모달 */}
