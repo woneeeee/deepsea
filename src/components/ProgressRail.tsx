@@ -1,7 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useModal } from '@/contexts/ModalContext';
+
+const ITEM_HEIGHT = 60;
+const GAP = 12;
+const ITEMS_PER_PAGE = 6;
+const PAGE_HEIGHT = ITEMS_PER_PAGE * ITEM_HEIGHT + (ITEMS_PER_PAGE - 1) * GAP;
 
 interface ProgressRailProps {
   onEndClick?: () => void;
@@ -11,6 +16,19 @@ export default function ProgressRail({ onEndClick }: ProgressRailProps) {
   const { emotionIndex, isOpen } = useModal();
   const [unlockedEmotions, setUnlockedEmotions] = useState<Set<number>>(new Set());
   const [isVisible, setIsVisible] = useState(true);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleScrollUp = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ top: -PAGE_HEIGHT, behavior: 'smooth' });
+    }
+  };
+
+  const handleScrollDown = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ top: PAGE_HEIGHT, behavior: 'smooth' });
+    }
+  };
 
   // localStorage에서 unlock 상태 불러오기
   useEffect(() => {
@@ -25,12 +43,13 @@ export default function ProgressRail({ onEndClick }: ProgressRailProps) {
     }
   }, []);
 
-  // 모달이 열릴 때 해당 emotion을 unlock 상태로 저장
+  // 모달이 열릴 때 해당 emotion을 unlock 상태로 저장 (감정 번호 1~15로 저장 — Modal/choose와 동일)
   useEffect(() => {
     if (isOpen && emotionIndex !== null) {
+      const emotionNumber = emotionIndex + 1;
       setUnlockedEmotions((prev) => {
         const next = new Set(prev);
-        next.add(emotionIndex);
+        next.add(emotionNumber);
         localStorage.setItem('unlockedEmotions', JSON.stringify(Array.from(next)));
         return next;
       });
@@ -39,10 +58,10 @@ export default function ProgressRail({ onEndClick }: ProgressRailProps) {
 
   const toggleVisibility = () => setIsVisible((prev) => !prev);
 
-  // useBigOrSmallFrame을 사용하는 감정들: 1, 5, 7, 8, 9 (인덱스: 0, 4, 6, 7, 8)
-  const bigOrSmallFrameEmotions = [0, 4, 6, 7, 8];
-  const hasUnlockedBigOrSmallFrame = bigOrSmallFrameEmotions.some((index) =>
-    unlockedEmotions.has(index),
+  // useBigOrSmallFrame을 사용하는 감정들: 1, 5, 7, 8, 9 (감정 번호)
+  const bigOrSmallFrameEmotions = [1, 5, 7, 8, 9];
+  const hasUnlockedBigOrSmallFrame = bigOrSmallFrameEmotions.some((num) =>
+    unlockedEmotions.has(num),
   );
 
   const handleEndClick = () => {
@@ -55,6 +74,10 @@ export default function ProgressRail({ onEndClick }: ProgressRailProps) {
       className="fixed top-1/2 right-8 z-30 flex -translate-y-1/2 flex-col items-center"
       style={{
         width: '80px',
+        borderRadius: '2000px',
+        background: 'linear-gradient(135deg, rgba(42, 42, 42, 0.6) 0%, rgba(26, 26, 26, 0.6) 100%)',
+        border: '1px solid rgba(0, 150, 255, 0.4)',
+        boxShadow: '0 0 20px rgba(0, 150, 255, 0.3), inset 0 0 40px rgba(0, 150, 255, 0.05)',
       }}
     >
       {isVisible && (
@@ -76,28 +99,34 @@ export default function ProgressRail({ onEndClick }: ProgressRailProps) {
             />
           </button>
 
-          {/* 상단 화살표 */}
-          <div className="mb-3 flex items-center justify-center">
-            <img src="/icons/top.svg" alt="scroll up" width={24} height={24} />
+          {/* 상단 화살표 — 항상 보임, 클릭 시 위로 한 페이지 */}
+          <div className="my-5 flex items-center justify-center">
+            <button
+              type="button"
+              onClick={handleScrollUp}
+              aria-label="위로 스크롤"
+              className="flex items-center justify-center transition-opacity hover:opacity-80"
+            >
+              <img src="/icons/top.svg" alt="scroll up" width={24} height={24} />
+            </button>
           </div>
 
-          {/* 메인 스크롤 영역 */}
+          {/* 메인 스크롤 영역 — 한 화면에 6개만 보이도록 고정 높이 */}
           <div
+            ref={scrollRef}
             className="relative overflow-x-hidden overflow-y-auto"
             style={{
               width: '80px',
-              height: 'calc(85vh - 200px)',
-              maxHeight: '700px',
-              background:
-                'linear-gradient(135deg, rgba(42, 42, 42, 0.6) 0%, rgba(26, 26, 26, 0.6) 100%)',
-              borderRadius: '20px',
-              border: '1px solid rgba(0, 150, 255, 0.4)',
-              boxShadow: '0 0 20px rgba(0, 150, 255, 0.3), inset 0 0 40px rgba(0, 150, 255, 0.05)',
+              height: PAGE_HEIGHT,
+              // background:
+              //   'linear-gradient(135deg, rgba(42, 42, 42, 0.6) 0%, rgba(26, 26, 26, 0.6) 100%)',
+              // borderRadius: '20px',
+              // border: '1px solid rgba(0, 150, 255, 0.4)',
+              // boxShadow: '0 0 20px rgba(0, 150, 255, 0.3), inset 0 0 40px rgba(0, 150, 255, 0.05)',
             }}
           >
-            <div className="flex flex-col items-center gap-3 px-2 py-4">
+            <div className="flex flex-col items-center gap-3 px-2 py-4" style={{ gap: GAP }}>
               {(() => {
-                // 그룹별 emotion 순서: [2,3,7], [5,11,15], [6,8,12], [1,10,14], [4,9,13]
                 const emotionGroups = [
                   [2, 3, 7],
                   [5, 11, 15],
@@ -110,17 +139,15 @@ export default function ProgressRail({ onEndClick }: ProgressRailProps) {
 
                 emotionGroups.forEach((group, groupIndex) => {
                   group.forEach((emotionNum) => {
-                    const emotionIndex = emotionNum - 1;
-                    const isUnlocked = unlockedEmotions.has(emotionIndex);
+                    const isUnlocked = unlockedEmotions.has(emotionNum);
 
                     items.push(
                       <div
                         key={emotionNum}
-                        className="relative flex items-center justify-center"
+                        className="relative flex shrink-0 items-center justify-center"
                         style={{
                           width: '56px',
-                          height: '56px',
-                          minHeight: '56px',
+                          height: `${ITEM_HEIGHT}px`,
                         }}
                       >
                         <img
@@ -146,16 +173,12 @@ export default function ProgressRail({ onEndClick }: ProgressRailProps) {
                     items.push(
                       <div
                         key={`line-${groupIndex}`}
-                        className="my-2 flex items-center justify-center"
-                        style={{
-                          width: '57px',
-                          height: '1px',
-                          minHeight: '1px',
-                        }}
+                        className="flex shrink-0 items-center justify-center py-1"
+                        style={{ width: '57px', height: '1px' }}
                       >
                         <img
                           src="/icons/progress-line.svg"
-                          alt="progress line"
+                          alt=""
                           className="h-full w-full object-contain"
                         />
                       </div>,
@@ -168,9 +191,16 @@ export default function ProgressRail({ onEndClick }: ProgressRailProps) {
             </div>
           </div>
 
-          {/* 하단 화살표 */}
-          <div className="mt-3 flex items-center justify-center">
-            <img src="/icons/down.svg" alt="scroll down" width={24} height={24} />
+          {/* 하단 화살표 — 항상 보임, 클릭 시 아래로 한 페이지 */}
+          <div className="my-5 flex items-center justify-center">
+            <button
+              type="button"
+              onClick={handleScrollDown}
+              aria-label="아래로 스크롤"
+              className="flex items-center justify-center transition-opacity hover:opacity-80"
+            >
+              <img src="/icons/down.svg" alt="scroll down" width={24} height={24} />
+            </button>
           </div>
         </>
       )}
