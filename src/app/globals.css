@@ -258,6 +258,14 @@ body {
   letter-spacing: 0%;
 }
 
+.body-36 {
+  font-family: var(--font-pretendard), sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 160%;
+  letter-spacing: 0%;
+}
+
 /* HsBombaram21 Typography */
 .text-bombaram {
   font-family: 'HsBombaram21', sans-serif;
@@ -463,6 +471,22 @@ body {
 }
 .bg-up3 {
   background-image: url('/icons/up-3.svg');
+}
+
+.bg-up-emotion-1 {
+  background-image: url('/icons/bg-1.svg');
+}
+.bg-up-emotion-5 {
+  background-image: url('/icons/bg-5.svg');
+}
+.bg-up-emotion-7 {
+  background-image: url('/icons/bg-7.svg');
+}
+.bg-up-emotion-8 {
+  background-image: url('/icons/bg-8.svg');
+}
+.bg-up-emotion-9 {
+  background-image: url('/icons/bg-9.svg');
 }
 
 .bg-screen1 {
