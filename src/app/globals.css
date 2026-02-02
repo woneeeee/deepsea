@@ -258,11 +258,27 @@ body {
   letter-spacing: 0%;
 }
 
+.body-26 {
+  font-family: var(--font-pretendard), sans-serif;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 180%;
+  letter-spacing: -1%;
+}
+
 .body-36 {
   font-family: var(--font-pretendard), sans-serif;
   font-size: 36px;
   font-weight: 600;
   line-height: 160%;
+  letter-spacing: 0%;
+}
+
+.body-700 {
+  font-family: var(--font-pretendard), sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 100%;
   letter-spacing: 0%;
 }
 
@@ -338,6 +354,15 @@ body {
   font-weight: 400;
   line-height: 160%;
   letter-spacing: 0%;
+}
+
+.seogang-55 {
+  font-family: 'Seongang', sans-serif;
+  font-size: 55px;
+  font-weight: 400;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  vertical-align: middle;
 }
 
 /* ============================================
@@ -456,11 +481,15 @@ body {
 }
 
 .bg-choose {
-  background-image: url('/icons/choose-screen.svg');
+  background-image: url('/icons/choose-screen.png');
 }
 
 .bg-light {
   background-image: url('/icons/light-screen.svg');
+}
+
+.bg-about {
+  background-image: url('/icons/about-screen.png');
 }
 
 .bg-up1 {
