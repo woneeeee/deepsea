@@ -20,7 +20,7 @@ const Header = () => {
 
   const menuItems = [
     { icon: '/icons/backtostart.svg', onClick: handleBackToStart, closeOnClick: true },
-    { icon: '/icons/about.svg', onClick: () => {}, closeOnClick: true },
+    { icon: '/icons/about.svg', onClick: () => router.push('/about'), closeOnClick: true },
     { icon: '/icons/credit.svg', onClick: () => {}, closeOnClick: true },
   ];
 
