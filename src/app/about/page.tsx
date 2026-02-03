@@ -30,7 +30,7 @@ export default function AboutPage() {
         </div>
         <div className="mt-[156px] flex flex-col items-start justify-start text-white">
           <p className="body-700 mb-[30px] flex flex-col items-start justify-start">디자인</p>
-          <div className="flex items-center justify-center gap-[36px]">
+          <div className="body-26 flex items-center justify-center gap-[36px]">
             <p>정윤서</p>
             <p>송채연</p>
             <p>정세윤</p>
@@ -39,7 +39,7 @@ export default function AboutPage() {
           <p className="body-700 mt-[90px] mb-[30px] flex flex-col items-start justify-start">
             개발
           </p>
-          <div className="flex items-center justify-center gap-[36px]">
+          <div className="body-26 flex items-center justify-center gap-[36px]">
             <p>김지원</p>
           </div>
         </div>

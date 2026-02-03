@@ -172,10 +172,9 @@ body {
 .subtitle-40 {
   font-family: var(--font-pretendard), sans-serif;
   font-size: 40px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 160%;
   letter-spacing: 0%;
-  vertical-align: middle;
 }
 
 .subtitle-24m {
@@ -256,6 +255,14 @@ body {
   font-weight: 600;
   line-height: 55px;
   letter-spacing: 0%;
+}
+
+.body-24 {
+  font-family: var(--font-pretendard), sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 170%;
+  letter-spacing: -1%;
 }
 
 .body-26 {

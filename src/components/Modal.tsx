@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useModal } from '@/contexts/ModalContext';
+import { openExploreModal } from '@/components/ExploreModalListener';
 import ModalFrame from '@/components/ModalFrame';
 import SmallModalFrame from '@/components/SmallModalFrame';
 import MiddleModalFrame from '@/components/MiddleModalFrame';
@@ -263,36 +264,36 @@ export default function Modal() {
                 <div className="flex gap-[32px]">
                   {relatedEmotions.map((emotionNum) => {
                     const isUnlocked = unlockedEmotions.has(emotionNum);
-                    return (
+                    const imgEl = (
+                      <img
+                        src={`/icons/emotion-${isUnlocked ? 'unlock' : 'lock'}-${emotionNum}.png`}
+                        alt={`emotion-${emotionNum}`}
+                        className="h-[136px] w-[136px] object-cover"
+                      />
+                    );
+                    return isUnlocked ? (
                       <button
                         key={emotionNum}
+                        type="button"
                         onClick={(e) => {
+                          e.preventDefault();
                           e.stopPropagation();
-                          setUnlockedEmotions((prev) => {
-                            const newSet = new Set(prev);
-                            if (newSet.has(emotionNum)) {
-                              newSet.delete(emotionNum);
-                            } else {
-                              newSet.add(emotionNum);
-                            }
-                            // localStorage에 저장
-                            if (typeof window !== 'undefined') {
-                              localStorage.setItem(
-                                'unlockedEmotions',
-                                JSON.stringify(Array.from(newSet)),
-                              );
-                            }
-                            return newSet;
-                          });
+                          openExploreModal();
+                          console.log('onClick');
                         }}
-                        className="relative h-[136px] w-[136px] overflow-hidden rounded-lg"
+                        className="relative h-[136px] w-[136px] cursor-pointer overflow-hidden rounded-lg transition-opacity hover:opacity-90"
+                        aria-label={`감정 ${emotionNum} 탐색으로 이동`}
                       >
-                        <img
-                          src={`/icons/emotion-${isUnlocked ? 'unlock' : 'lock'}-${emotionNum}.png`}
-                          alt={`emotion-${emotionNum}`}
-                          className="h-[136px] w-[136px] object-cover"
-                        />
+                        {imgEl}
                       </button>
+                    ) : (
+                      <div
+                        key={emotionNum}
+                        className="relative h-[136px] w-[136px] overflow-hidden rounded-lg"
+                        aria-hidden
+                      >
+                        {imgEl}
+                      </div>
                     );
                   })}
                 </div>

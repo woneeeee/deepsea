@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useModal } from '@/contexts/ModalContext';
+import { openExploreModal } from '@/components/ExploreModalListener';
 
 const ITEM_HEIGHT = 60;
 const GAP = 12;
@@ -71,9 +72,12 @@ export default function ProgressRail({ onEndClick }: ProgressRailProps) {
 
   return (
     <div
-      className="fixed top-1/2 right-8 z-30 flex -translate-y-1/2 flex-col items-center"
+      className="fixed top-1/2 right-8 z-50 flex -translate-y-1/2 flex-col items-center"
+      onMouseDown={(e) => e.stopPropagation()}
+      onMouseUp={(e) => e.stopPropagation()}
       style={{
         width: '80px',
+        pointerEvents: 'auto',
         borderRadius: '2000px',
         background: 'linear-gradient(135deg, rgba(42, 42, 42, 0.6) 0%, rgba(26, 26, 26, 0.6) 100%)',
         border: '1px solid rgba(0, 150, 255, 0.4)',
@@ -140,32 +144,52 @@ export default function ProgressRail({ onEndClick }: ProgressRailProps) {
                 emotionGroups.forEach((group, groupIndex) => {
                   group.forEach((emotionNum) => {
                     const isUnlocked = unlockedEmotions.has(emotionNum);
-
-                    items.push(
-                      <div
-                        key={emotionNum}
-                        className="relative flex shrink-0 items-center justify-center"
+                    const wrapperStyle = {
+                      width: '56px',
+                      height: `${ITEM_HEIGHT}px`,
+                    };
+                    const imgEl = (
+                      <img
+                        src={
+                          isUnlocked
+                            ? `/icons/unlock-${emotionNum}.svg`
+                            : `/icons/lock-${emotionNum}.png`
+                        }
+                        alt={isUnlocked ? `unlocked-${emotionNum}` : `locked-${emotionNum}`}
+                        className="h-full w-full object-contain"
                         style={{
-                          width: '56px',
-                          height: `${ITEM_HEIGHT}px`,
+                          filter: isUnlocked
+                            ? 'drop-shadow(0 0 12px rgba(0, 150, 255, 0.8))'
+                            : 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.2))',
+                          transition: 'filter 0.3s ease',
                         }}
-                      >
-                        <img
-                          src={
-                            isUnlocked
-                              ? `/icons/unlock-${emotionNum}.svg`
-                              : `/icons/lock-${emotionNum}.png`
-                          }
-                          alt={isUnlocked ? `unlocked-${emotionNum}` : `locked-${emotionNum}`}
-                          className="h-full w-full object-contain"
-                          style={{
-                            filter: isUnlocked
-                              ? 'drop-shadow(0 0 12px rgba(0, 150, 255, 0.8))'
-                              : 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.2))',
-                            transition: 'filter 0.3s ease',
+                      />
+                    );
+                    items.push(
+                      isUnlocked ? (
+                        <button
+                          key={emotionNum}
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            openExploreModal();
                           }}
-                        />
-                      </div>,
+                          className="relative flex shrink-0 cursor-pointer items-center justify-center transition-opacity hover:opacity-90"
+                          style={wrapperStyle}
+                          aria-label={`감정 ${emotionNum} 탐색으로 이동`}
+                        >
+                          {imgEl}
+                        </button>
+                      ) : (
+                        <div
+                          key={emotionNum}
+                          className="relative flex shrink-0 items-center justify-center"
+                          style={wrapperStyle}
+                        >
+                          {imgEl}
+                        </div>
+                      ),
                     );
                   });
 

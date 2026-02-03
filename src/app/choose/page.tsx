@@ -151,7 +151,7 @@ export default function ChoosePage() {
           </div>
         )}
 
-        <div className="seogang-32 mt-[44px] text-center text-white">
+        <div className="seogang-32 mt-[80px] text-center text-white">
           마지막으로 가져 갈
           <br />
           나만의 보물 하나를 선택하세요

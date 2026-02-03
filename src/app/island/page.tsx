@@ -135,22 +135,32 @@ export default function IslandPage() {
     <>
       <div className={`bg-base ${getBackgroundClass(selectedEmotion)} min-h-screen`}>
         <Header />
-        <div className="mt-[100px] ml-[160px] flex flex-col">
+        <div className="mt-[300px] ml-[400px] flex flex-col">
           {username && selectedEmotion && (
             <>
-              <p className="subtitle-40 text-white">{username}님의</p>
-              <p className="heading-72 text-white">{ISLAND_NAMES[selectedEmotion] || '섬'}</p>
+              <p
+                className={`subtitle-40 ${selectedEmotion === 5 || selectedEmotion === 9 ? 'text-white' : 'text-black'}`}
+              >
+                {username}님의
+              </p>
+              <p
+                className={`heading-72 mb-[50px] ${selectedEmotion === 5 || selectedEmotion === 9 ? 'text-white' : 'text-black'}`}
+              >
+                {ISLAND_NAMES[selectedEmotion] || '섬'}
+              </p>
               {(() => {
                 const description = getIslandDescription(selectedEmotion, username);
+                const textColor =
+                  selectedEmotion === 5 || selectedEmotion === 9 ? 'text-white' : 'text-black';
                 if (description) {
                   const hasBrTag = description.includes('<br/>');
                   return hasBrTag ? (
                     <p
-                      className="body-36 text-white"
+                      className={`body-24 ${textColor}`}
                       dangerouslySetInnerHTML={{ __html: description }}
                     />
                   ) : (
-                    <p className="body-36 text-white">{description}</p>
+                    <p className={`body-24 ${textColor}`}>{description}</p>
                   );
                 }
                 return null;
@@ -164,21 +174,21 @@ export default function IslandPage() {
             <button
               type="button"
               onClick={() => handleLetterClick(0)}
-              className="absolute bottom-[100px] left-[200px] shrink-0"
+              className="absolute bottom-[250px] left-[250px] shrink-0"
             >
-              <Image src="/icons/first-letter.svg" alt="first letter" width={220} height={100} />
+              <Image src="/icons/first-letter.svg" alt="first letter" width={170} height={180} />
             </button>
             {savedAnswersCount >= 2 && (
               <button
                 type="button"
                 onClick={() => handleLetterClick(1)}
-                className="absolute bottom-[224px] left-[724px] shrink-0"
+                className="absolute bottom-[100px] left-[724px] shrink-0"
               >
                 <Image
                   src="/icons/second-letter.svg"
                   alt="second letter"
-                  width={220}
-                  height={100}
+                  width={170}
+                  height={180}
                 />
               </button>
             )}

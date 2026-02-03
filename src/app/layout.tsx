@@ -2,6 +2,7 @@
 import './globals.css';
 import { ModalProvider } from '@/contexts/ModalContext';
 import Modal from '@/components/Modal';
+import ExploreModalListener from '@/components/ExploreModalListener';
 
 export const metadata = {
   title: 'DEEPSEA',
@@ -18,6 +19,7 @@ export default function RootLayout({
         <ModalProvider>
           {children}
           <Modal />
+          <ExploreModalListener />
         </ModalProvider>
       </body>
     </html>

@@ -235,7 +235,7 @@ const Page = () => {
                   }}
                   onClick={(e) => {
                     e.stopPropagation();
-                    // 클릭된 아이콘의 화면 위치 저장
+                    // ??? ???? ?? ?? ??
                     const rect = e.currentTarget.getBoundingClientRect();
                     setSelectedIconIndex(index);
                     setSelectedIconPosition({
@@ -255,8 +255,9 @@ const Page = () => {
               );
             });
           })()}
-        <ProgressRail onEndClick={() => setIsEndModalOpen(true)} />
       </div>
+
+      <ProgressRail onEndClick={() => setIsEndModalOpen(true)} />
 
       <EndModal
         isOpen={isEndModalOpen}
