@@ -526,19 +526,19 @@ body {
 }
 
 .bg-screen1 {
-  background-image: url('/icons/screen-1.svg');
+  background-image: url('/icons/screen-1.png');
 }
 .bg-screen2 {
-  background-image: url('/icons/screen-2.svg');
+  background-image: url('/icons/screen-2.png');
 }
 .bg-screen7 {
-  background-image: url('/icons/screen-7.svg');
+  background-image: url('/icons/screen-7.png');
 }
 .bg-screen8 {
-  background-image: url('/icons/screen-8.svg');
+  background-image: url('/icons/screen-8.png');
 }
 .bg-screen9 {
-  background-image: url('/icons/screen-9.svg');
+  background-image: url('/icons/screen-9.png');
 }
 
 /* Gradient Styles */

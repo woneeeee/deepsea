@@ -16,7 +16,6 @@ export default function ExploreModal({ isOpen, onContinue, onEnd }: ExploreModal
 
   const handleEnd = () => {
     onEnd();
-    router.push('/end');
   };
 
   return (
